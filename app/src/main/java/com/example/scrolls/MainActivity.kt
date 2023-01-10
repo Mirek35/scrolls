@@ -13,10 +13,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,31 +27,32 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MainActivity : ComponentActivity() {
 
     private val listItems: List<ElementsForOneRow> = listOf(
-        ElementsForOneRow("isOk","Jayme"),
-        ElementsForOneRow("isNot","Gil"),
-        ElementsForOneRow("not","Juice WRLD"),
-        ElementsForOneRow("Ok","Callan"),
-        ElementsForOneRow("Ok","Braxton"),
-        ElementsForOneRow("Ok","Kyla"),
-        ElementsForOneRow("Ok","Lil Mosey"),
-        ElementsForOneRow("Ok","Allan"),
-        ElementsForOneRow("Ok","Mike"),
-        ElementsForOneRow("Ok","Drew"),
-        ElementsForOneRow("Ok","SDFNia"),
-        ElementsForOneRow("Ok","Coi Relay"),
-        ElementsForOneRow("Ok","CGGGallan"),
-        ElementsForOneRow("Not","Braxton"),
-        ElementsForOneRow("Ok","TTTKyla"),
-        ElementsForOneRow("Ok","Lil Mosey"),
-        ElementsForOneRow("Not","ADllan"),
-        ElementsForOneRow("Ok","Mike"),
-        ElementsForOneRow("N","Drew"),
-        ElementsForOneRow("Ok","VBGNia"),
-        ElementsForOneRow("Not","DSHCoi Relay")
+        ElementsForOneRow("isOk","Jayme", LocalDateTime.now()),
+       ElementsForOneRow("isNot","Gil", LocalDateTime.now().minusDays(1)),
+        ElementsForOneRow("not","Juice WRLD", LocalDateTime.now().minusDays(6)),
+        ElementsForOneRow("Ok","Callan", LocalDateTime.now().minusDays(1)),
+        ElementsForOneRow("Ok","Braxton", LocalDateTime.now().minusHours(2)),
+        ElementsForOneRow("Ok","Kyla", LocalDateTime.now().minusDays(1)),
+        ElementsForOneRow("Ok","Lil Mosey", LocalDateTime.now().minusHours(1)),
+        ElementsForOneRow("Ok","Allan", LocalDateTime.now().minusHours(2)),
+        ElementsForOneRow("Ok","Mike", LocalDateTime.now().minusDays(4)),
+        ElementsForOneRow("Ok","Drew", LocalDateTime.now().minusHours(4)),
+        ElementsForOneRow("Ok","SDFNia", LocalDateTime.now().minusHours(2)),
+        ElementsForOneRow("Ok","Coi Relay", LocalDateTime.now().minusDays(8)),
+        ElementsForOneRow("Ok","CGGGallan", LocalDateTime.now().minusHours(2)),
+        ElementsForOneRow("Not","Braxton", LocalDateTime.now().minusHours(7)),
+        ElementsForOneRow("Ok","TTTKyla", LocalDateTime.now().minusDays(1)),
+        ElementsForOneRow("Ok","Lil Mosey", LocalDateTime.now().minusHours(3)),
+        ElementsForOneRow("Not","ADllan", LocalDateTime.now().minusDays(1)),
+        ElementsForOneRow("Ok","Mike", LocalDateTime.now().minusHours(5)),
+        ElementsForOneRow("N","Drew", LocalDateTime.now().minusHours(3)),
+        ElementsForOneRow("Ok","VBGNia", LocalDateTime.now().minusDays(7)),
+        ElementsForOneRow("Not","D Relay", LocalDateTime.now().minusHours(1))
 
     )
 
@@ -111,30 +114,39 @@ fun ElementsForOneRow(item: ElementsForOneRow) {
                     .width(80.dp)
                     .height(80.dp)
             )
-            Text(
-                modifier = Modifier
+            Text(modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .align(CenterVertically),
                 text = item.isOk,
                 color = Color.Black,
-                fontSize = 16.sp
-            )
-            Text(
-                modifier = Modifier
+                fontSize = 16.sp)
+            Text(modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .align(CenterVertically),
                 text = item.name,
                 color = Color.Black,
-                fontSize = 16.sp
-            )
+                fontSize = 16.sp)
+            Text(modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .align(CenterVertically)
+                ,text = convertTimeToHumanReadableFormat(item.mdata),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black)
         }
     }
+}
+
+fun convertTimeToHumanReadableFormat(timeToBeFormatted: LocalDateTime): String {
+    val formatter = DateTimeFormatter.ofPattern("MM-dd HH:mm")
+    return timeToBeFormatted.format(formatter)
+
 }
 
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
     ScrollsTheme {
-        ElementsForOneRow(item = ElementsForOneRow("isOk" ,name = String()))
+        ElementsForOneRow(item = ElementsForOneRow("isOk" ,String(),LocalDateTime.now()))
     }
 }
