@@ -24,27 +24,33 @@ import com.example.scrolls.ui.theme.ScrollsTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class MainActivity : ComponentActivity() {
 
-    private val listItems: List<ListItem> = listOf(
-        ListItem("Jayme"),
-        ListItem("Gil"),
-        ListItem("Juice WRLD"),
-        ListItem("Callan"),
-        ListItem("Braxton"),
-        ListItem("Kyla"),
-        ListItem("Lil Mosey"),
-        ListItem("Allan"),
-        ListItem("Mike"),
-        ListItem("Drew"),
-        ListItem("Nia"),
-        ListItem("Coi Relay"),
-        ListItem("Ullan"),
-        ListItem("Nike"),
-        ListItem("Frew"),
-        ListItem("Oia"),
-        ListItem("Relay")
+    private val listItems: List<ElementsForOneRow> = listOf(
+        ElementsForOneRow("isOk","Jayme"),
+        ElementsForOneRow("isNot","Gil"),
+        ElementsForOneRow("not","Juice WRLD"),
+        ElementsForOneRow("Ok","Callan"),
+        ElementsForOneRow("Ok","Braxton"),
+        ElementsForOneRow("Ok","Kyla"),
+        ElementsForOneRow("Ok","Lil Mosey"),
+        ElementsForOneRow("Ok","Allan"),
+        ElementsForOneRow("Ok","Mike"),
+        ElementsForOneRow("Ok","Drew"),
+        ElementsForOneRow("Ok","SDFNia"),
+        ElementsForOneRow("Ok","Coi Relay"),
+        ElementsForOneRow("Ok","CGGGallan"),
+        ElementsForOneRow("Not","Braxton"),
+        ElementsForOneRow("Ok","TTTKyla"),
+        ElementsForOneRow("Ok","Lil Mosey"),
+        ElementsForOneRow("Not","ADllan"),
+        ElementsForOneRow("Ok","Mike"),
+        ElementsForOneRow("N","Drew"),
+        ElementsForOneRow("Ok","VBGNia"),
+        ElementsForOneRow("Not","DSHCoi Relay")
+
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,14 +70,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun DisplayList(items: List<ListItem>) {
+fun DisplayList(items: List<ElementsForOneRow>) {
     val listState = rememberLazyListState()
     LazyColumn(
         state = listState,
         modifier = Modifier.fillMaxSize(1f)
     ) {
         items(items) { item ->
-            ListItem(item = item)
+            ElementsForOneRow(item = item)
         }
         CoroutineScope(Dispatchers.Main).launch {
             listState.scrollToItem(items.size - 1)
@@ -81,7 +87,7 @@ fun DisplayList(items: List<ListItem>) {
 }
 
 @Composable
-fun ListItem(item: ListItem) {
+fun ElementsForOneRow(item: ElementsForOneRow) {
 
     Box(
         modifier = Modifier
@@ -109,11 +115,18 @@ fun ListItem(item: ListItem) {
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .align(CenterVertically),
+                text = item.isOk,
+                color = Color.Black,
+                fontSize = 16.sp
+            )
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .align(CenterVertically),
                 text = item.name,
                 color = Color.Black,
                 fontSize = 16.sp
             )
-
         }
     }
 }
@@ -122,6 +135,6 @@ fun ListItem(item: ListItem) {
 @Composable
 fun Preview() {
     ScrollsTheme {
-        ListItem(item = ListItem("J"))
+        ElementsForOneRow(item = ElementsForOneRow("isOk" ,name = String()))
     }
 }
